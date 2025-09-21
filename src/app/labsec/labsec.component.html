@@ -1,0 +1,14 @@
+<div class="container">
+  <h2>Labsec Calculator</h2>
+
+  <input type="number" [(ngModel)]="n" min="1" value="1" />
+  <button (click)="onSubmit()">Calculate</button>
+
+  <div *ngIf="result !== undefined">
+    <p>L({{ submittedN }}) = {{ result }}</p>
+  </div>
+
+  <div *ngIf="error">
+    <p style="color: red">{{ error }}</p>
+  </div>
+</div>
