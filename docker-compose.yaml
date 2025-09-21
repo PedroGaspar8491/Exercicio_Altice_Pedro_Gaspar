@@ -2,12 +2,23 @@ services:
   backend:
     build:
       context: ./labsec-quarkus
-      dockerfile: src/main/docker/Dockerfile.jvm
+      dockerfile: Dockerfile.jvm
     ports:
       - "8080:8080"
+    environment:
+      - QUARKUS_PROFILE=prod
+    restart: unless-stopped
+    networks:
+      - app-network
   frontend:
     build: ./labsec-angular
     ports:
-      - "4200:4200"
+      - "4200:80"
     depends_on:
       - backend
+    restart: unless-stopped
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
