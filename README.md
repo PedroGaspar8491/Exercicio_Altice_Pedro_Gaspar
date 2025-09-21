@@ -6,16 +6,38 @@ Este projeto consiste numa **REST API** simples (Quarkus) com uma interface para
 
 - Docker
 - Docker Compose
+- Maven (scripts necessários disponibilizados no repositório)
+- Node.js
 
-## Como Correr os Containers
+## Como Usar
 
-Num terminal localizado na pasta root, temos que utilizar o seguinte comando:
+1. Clone o repositório.
 
-```bash
-docker compose up --build
-```
+   ```bash
+   git clone https://github.com/PedroGaspar8491/Exercicio_Altice_Pedro_Gaspar
+   ```
 
-Depois de um periodo de tempo, a aplicação estará disponível.
+2. Construa as aplicações:
+
+   ```bash
+   # A partir da pasta root da aplicação
+   cd labsec-quarkus
+   ./mvnw clean package
+   cd ..
+
+   cd labsec-angular
+   npm install
+   npm run build -- --configuration production
+   cd ..
+   ```
+
+3. Execute os containers
+
+   ```bash
+   docker compose up --build
+   ```
+
+## URLs Relevantes
 
 - Backend (Quarkus) : http://localhost:8080
 - Frontend (Angular) : http://localhost:4200

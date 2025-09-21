@@ -1,5 +1,5 @@
 services:
-  backend:
+  labsec-quarkus:
     build:
       context: ./labsec-quarkus
       dockerfile: Dockerfile.jvm
@@ -10,12 +10,14 @@ services:
     restart: unless-stopped
     networks:
       - app-network
-  frontend:
-    build: ./labsec-angular
+  labsec-angular:
+    build:
+      context: ./labsec-angular
+      dockerfile: Dockerfile
     ports:
       - "4200:80"
     depends_on:
-      - backend
+      - labsec-quarkus
     restart: unless-stopped
     networks:
       - app-network

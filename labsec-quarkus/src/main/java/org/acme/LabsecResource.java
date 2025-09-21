@@ -22,6 +22,14 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 public class LabsecResource {
     private Map<Integer, BigInteger> map = new HashMap<>();
 
+    public LabsecResource() {
+        // Popula o mapa com os casos base
+        map.put(0, BigInteger.ZERO);
+        map.put(1, BigInteger.ONE);
+        map.put(2, BigInteger.ZERO);
+        map.put(3, BigInteger.ONE);
+    }
+
     @Path("/{n}")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -30,56 +38,30 @@ public class LabsecResource {
             @APIResponse(responseCode = "400", description = "Invalid input, n must be a positive integer")
     })
     public String getLabsec(@PathParam("n") int n) {
-
-        // Verifica se o valor para n já foi gravado em cache
-        if (map.containsKey(n)) {
-            return map.get(n).toString();
-        }
         return labsec(n).toString();
     }
 
     private BigInteger labsec(int n) {
-        // Popula o mapa com os casos base, caso estes não existam
-        if (!map.containsKey(0) || !map.containsKey(1) || !map.containsKey(2) || !map.containsKey(3)) {
-            map.put(0, BigInteger.ZERO);
-            map.put(1, BigInteger.ONE);
-            map.put(2, BigInteger.ZERO);
-            map.put(3, BigInteger.ONE);
-        }
 
         // Verifica se o input é válido
         if (n < 0) {
             throw new WebApplicationException("Numbers must be positive Integers.", Response.Status.BAD_REQUEST);
         }
 
-        // Retorna os casos base quando forem pedidos
-        if (n == 0 || n == 1 || n == 2 || n == 3) {
+        // Verifica se o valor para n já foi gravado em cache
+        if (map.containsKey(n)) {
             return map.get(n);
         }
 
-        // No caso de não haver valores guardados em caching, começa nos casos base
-        BigInteger a = map.get(0), b = map.get(1), temp;
-        int latest = 3;
-
-        // Obtem o par de valores mais proximos de n de acordo com a sequencia ( a =
-        // n-4, b = n-3)
-        for (int i = n; i >= 3; i--) {
-            if (map.containsKey(i)) {
-                latest = i;
-                a = map.get(i - 3);
-                b = map.get(i - 2);
-                break;
-            }
-        }
+        // Determina o ponto de partida para o cálculo
+        int start = map.keySet().stream().max(Integer::compareTo).orElse(3);
 
         // Calcula e grava cada valor da sequência até n
-        for (int i = latest + 1; i <= n; i++) {
-            temp = a.add(b);
-            a = b;
-            b = temp;
-            map.put(i, b);
+        for (int i = start + 1; i <= n; i++) {
+            BigInteger value = map.get(i - 4).add(map.get(i - 3));
+            map.put(i, value);
         }
 
-        return b;
+        return map.get(n);
     }
 }
