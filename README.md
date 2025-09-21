@@ -1,59 +1,53 @@
-# LabsecAngular
+# Labsec Calculator
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+Este projeto consiste numa **REST API** simples (Quarkus) com uma interface para o utilizador interagir (Angular). Estes componentes estão disponibilizados através de **containers Docker**.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+- Docker
+- Docker Compose
 
-```bash
-ng serve
-```
+## Como Correr os Containers
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Num terminal localizado na pasta root, temos que utilizar o seguinte comando:
 
 ```bash
-ng generate component component-name
+docker compose up --build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Depois de um periodo de tempo, a aplicação estará disponível.
 
-```bash
-ng generate --help
-```
+- Backend (Quarkus) : http://localhost:8080
+- Frontend (Angular) : http://localhost:4200
 
-## Building
+## REST API
 
-To build the project run:
+URL Base: `http://localhost:8080`
 
-```bash
-ng build
-```
+### Endpoint
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **GET: /labsec/{n}**
 
-## Running unit tests
+  - **Descrição:** Retorna o valor LabSec de um número inteiro e positivo (n);
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+  - **Parâmetros:**
+    - `n`(integer, obrigatório)
+  - **Respostas:**
 
-```bash
-ng test
-```
+    -`200 OK:` Retorna o valor LabSec de n como um String;
 
-## Running end-to-end tests
+    -`400 Bad Request:` Parâmetro inválido, como um número negativo;
 
-For end-to-end (e2e) testing, run:
+    -`500 Internal Server Error:` Erro inesperado;
 
-```bash
-ng e2e
-```
+### Documentação API
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- Swagger UI: http://localhost:8080/swagger-ui
 
-## Additional Resources
+## Interface Gráfica
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Acessivel em: http://localhost:4200
+- Características:
+  - Input para o integer `n`;
+  - Mostra o resultado obtido pelo endpoint;
+  - Mostra mensagem de erro, caso estes aconteçam;

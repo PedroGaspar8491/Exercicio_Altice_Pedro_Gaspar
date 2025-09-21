@@ -1,0 +1,13 @@
+services:
+  backend:
+    build:
+      context: ./labsec-quarkus
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8080:8080"
+  frontend:
+    build: ./labsec-angular
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
