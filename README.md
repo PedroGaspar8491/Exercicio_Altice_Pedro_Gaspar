@@ -30,8 +30,11 @@ Este projeto consiste numa **REST API** simples (Quarkus) com uma interface para
    npm run build -- --configuration production
    cd ..
    ```
+   2.1 Erros comuns:
+      - JAVA_HOME não está definida: Este erro apresenta-se ao utilizar o comando `./mvnw clean package` quando o utilizador não definiu a JAVA_HOME no PATH. Isto pode ser resolvido ao editar as variáveis de ambiente em sistemas Windows, ou exportando a localização do javac em sistemas UNIX.
+      - Permission denied: ./mvnw: Em sistemas Unix, poderá ser necessário alterar as permissões do script mvnw. Isto pode ser feito através do comando `chmod +x ./mvnw`.
 
-3. Execute os containers
+4. Execute os containers
 
    ```bash
    docker compose up --build
