@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.WebApplicationException;
-import java.math.BigInteger;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LabsecResourceTest {
